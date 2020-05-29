@@ -3,5 +3,6 @@ from . import views
 
 app_name = "coffee_finder"
 urlpatterns = [
-    path("",views.index,name="index")
+    path("",views.index,name="index"),
+    path("signup/",views.signup,name="signup")
 ]
