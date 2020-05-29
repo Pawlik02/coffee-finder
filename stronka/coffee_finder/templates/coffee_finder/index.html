@@ -1,0 +1,38 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="coffee_finder/master.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <title>Find yourself in coffee</title>
+  </head>
+  <body class="body">
+    <div>
+      <div class="menu">
+        <h1 class="header1">Coffee Finder</h1>
+        <h3 class="header2">Find yourself in coffee</h3>
+      </div>
+      <div class="content grow" id="content">
+        <div class="photowrap">
+          <div class="left" id="left" onclick="mouseClickLeft()">
+
+          </div>
+          <div class="right" id="right" onclick="mouseClickRight()">
+
+          </div>
+          <div class="photo">
+            <img class="image" src="kahawa.jpg" alt="">
+          </div>
+        </div>
+
+        <div class="description">
+          <p>Placeholder</p>
+          <p>Placeholder</p>
+          <p>Placeholder</p>
+        </div>
+      </div>
+    </div>
+    <script src="{% static "coffee_finder/swipe.js"%}"></script>
+  </body>
+</html>
