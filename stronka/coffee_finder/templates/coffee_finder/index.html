@@ -1,9 +1,9 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="coffee_finder/master.css">
+    <link rel="stylesheet" type="text/css" href="{% static "coffee_finder/master.css" %}">
     <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
     <title>Find yourself in coffee</title>
   </head>
@@ -22,7 +22,7 @@
 
           </div>
           <div class="photo">
-            <img class="image" src="kahawa.jpg" alt="">
+            <img class="image" src="{% static "coffee_finder/kahawa.jpg" %}" alt="">
           </div>
         </div>
 
