@@ -4,27 +4,25 @@
 }
 
 .menu{
-  background-color: #78584a;
-  /* background-color: blue; */
+  /* background-color: #78584a; */
+  background-color: blue;
   display: flex;
   height: 10em;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
 }
 
 .header1{
   display: flex;
-  margin-left: 20px;
   flex-grow: inherit;
   font-family: 'Caveat', cursive;
-  font-size: 50px;
-  /* background-color: blue; */
+  font-size: 10px;
+  background-color: blue;
   text-align: left;
 }
 .header2{
   display: flex;
-  margin-left: 30px;
   flex-grow: inherit;
   font-family: 'Caveat', cursive;
   font-size: 30px;
