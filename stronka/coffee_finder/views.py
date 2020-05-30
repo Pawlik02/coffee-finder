@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+import requests
+import json
 
 api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
@@ -31,3 +33,15 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request,"coffee_finder/signup.html",{"form":form})
+
+def login_handler(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username,password=password)
+        if user:
+            login(request,user)
+            return render(request, "coffee_finder/index.html")
+        else:
+            return HttpResponse("Wrong data")
+    return render(request, "coffee_finder/login.html")
