@@ -1,14 +1,22 @@
-import request
+import requests
+import json
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
-api_key = "AIzaSyBF_3OJcvP2e1eP0lk0Q9Qyo6-MWI8yX3M"
+api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
 def index(request):
-    name = request.get("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=kahawa&key="+api_key)
-    return render(request,"coffee_finder/index.html")
+    response = requests.post("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=kahawa&inputtype=textquery&key="+api_key)
+    response = response.text
+    response = json.loads(response)
+    candidates = response["candidates"]
+    id = candidates[0]
+    id = id["place_id"]
+    response = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+str(id)+"&key="+api_key)
+    name = response.text
+    return render(request,"coffee_finder/index.html",{"name":name})
 
 def signup(request):
     if request.method == "POST":
