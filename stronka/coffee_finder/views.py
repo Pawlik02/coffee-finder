@@ -20,7 +20,7 @@ def index(request):
     name = response.text
     return render(request,"coffee_finder/index.html",{"name":name})
 
-def location(request):
+def test(request):
     if request.method == "POST":
         location = request.POST.get("location")
         user = request.user
@@ -30,8 +30,8 @@ def location(request):
             data = Profile(user=user,location=location)
             data.save()
     else:
-        return render(request,"coffee_finder/index.html")
-    return render(request,"coffee_finder/index.html",{"location":location})
+        return render(request,"coffee_finder/test.html")
+    return render(request,"coffee_finder/test.html",{"location":location})
 
 def signup(request):
     if request.method == "POST":
