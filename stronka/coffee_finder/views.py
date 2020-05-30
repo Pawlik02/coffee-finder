@@ -9,8 +9,6 @@ import json
 
 api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
-api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
-
 def index(request):
     response = requests.post("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=kahawa&inputtype=textquery&key="+api_key)
     response = response.text
