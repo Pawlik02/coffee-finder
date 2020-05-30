@@ -2,6 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+import requests
+import json
+
+api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
 def index(request):
     return render(request, "coffee_finder/index.html")
