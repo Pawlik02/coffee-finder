@@ -1,11 +1,11 @@
 import requests
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-import requests
-import json
+from django.urls import reverse
+from .models import Profile
 
 api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
@@ -19,6 +19,19 @@ def index(request):
     response = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+str(id)+"&key="+api_key)
     name = response.text
     return render(request,"coffee_finder/index.html",{"name":name})
+
+def test(request):
+    if request.method == "POST":
+        location = request.POST.get("location")
+        user = request.user
+        if Profile.objects.filter(user=user).exists():
+            Profile.objects.update(user=user,location=location)
+        else:
+            data = Profile(user=user,location=location)
+            data.save()
+    else:
+        return render(request,"coffee_finder/test.html")
+    return render(request,"coffee_finder/test.html",{"location":location})
 
 def signup(request):
     if request.method == "POST":
@@ -41,7 +54,7 @@ def login_handler(request):
         user = authenticate(username=username,password=password)
         if user:
             login(request,user)
-            return render(request, "coffee_finder/index.html")
+            return HttpResponseRedirect(reverse("coffee_finder:index"))
         else:
             return HttpResponse("Wrong data")
     return render(request, "coffee_finder/login.html")
