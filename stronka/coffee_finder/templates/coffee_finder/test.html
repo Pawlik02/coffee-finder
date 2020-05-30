@@ -1,0 +1,8 @@
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="location">Location:</label>
+    <input type="text" name="location">
+    <input type="submit">
+</form>
+{% endblock %}
