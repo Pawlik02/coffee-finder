@@ -1,15 +1,27 @@
 {% extends 'coffee_finder/signup.html' %}
+{% load static%}
 {% block content %}
-<h2>LOGIN</h2>
-    <form method="post">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" name="username">
-        <label for="password">Password:</label>
-        <input type="password" name="password">
-        <input type="submit" name="" value="login">
-    </form>
-    <div class="">
-      <a href="{% url "coffee_finder:signup" %}">Redirect to sign up page</a>
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static "coffee_finder/login.css" %}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <title>Coffee Finder Login Page</title>
+</head>
+<body class="body">
+  <div class="wrap">
+    <div class="login">
+      <h2>LOGIN</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" name="username">
+            <label for="password">Password:</label>
+            <input type="password" name="password">
+            <input type="submit" name="" value="login">
+        </form>
+        <div class="">
+          <a href="{% url "coffee_finder:signup" %}">Redirect to sign up page</a>
+        </div>
     </div>
+  </div>
+</body>
 {% endblock %}
