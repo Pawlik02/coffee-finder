@@ -16,6 +16,8 @@ def index(request):
     response = requests.post("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=kahawa&inputtype=textquery&key="+api_key)
     response = response.text
     response = json.loads(response)
+    user = request.user
+    Profile.objects.update(user=user,favourite=response)
     candidates = response["candidates"]
     id = candidates[0]
     id = id["place_id"]
