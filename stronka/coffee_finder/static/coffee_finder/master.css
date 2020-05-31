@@ -1,32 +1,46 @@
 *{
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Caveat', cursive;
 }
 
 .menu{
   background-color: #78584a;
+  /* background-color: blue; */
   display: flex;
   height: 10em;
-  flex-direction: column;
+  width: 100%;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.headers{
+  display: flex;
+  flex-flow: column;
+}
+.input{
+  display: inherit;
   align-items: center;
   justify-content: center;
 }
-
 .header1{
   display: flex;
+  margin-left: 20px;
   flex-grow: inherit;
-  font-family: 'Caveat', cursive;
   font-size: 50px;
   /* background-color: blue; */
-  text-align: center;
+  text-align: left;
 }
 .header2{
   display: flex;
+  margin-left: 50px;
   flex-grow: inherit;
-  font-family: 'Caveat', cursive;
+  /* font-family: 'Caveat', cursive; */
   font-size: 30px;
-  text-align: center;
+  text-align: left;
 }
+
 .content:hover {
   transform: scale(1.05);
 
