@@ -33,19 +33,6 @@ def index(request):
         return render(request,"coffee_finder/index.html",{"name":name})
     return render(request,"coffee_finder/index.html",{"name":name,"location":location})
 
-# def test(request):
-#     if request.method == "POST":
-#         location = request.POST.get("location")
-#         user = request.user
-#         if Profile.objects.filter(user=user).exists():
-#             Profile.objects.update(user=user,location=location)
-#         else:
-#             data = Profile(user=user,location=location)
-#             data.save()
-#     else:
-#         return render(request,"coffee_finder/test.html")
-#     return render(request,"coffee_finder/test.html",{"location":location})
-
 def signup(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
