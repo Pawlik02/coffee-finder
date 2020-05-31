@@ -5,11 +5,14 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
+from django.http import HttpResponseRedirect
 from .models import Profile
 
 api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
 def index(request):
+    if request.user.is_anonymous:
+        return HttpResponseRedirect(reverse("coffee_finder:login"))
     response = requests.post("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=kahawa&inputtype=textquery&key="+api_key)
     response = response.text
     response = json.loads(response)
@@ -18,9 +21,6 @@ def index(request):
     id = id["place_id"]
     response = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+str(id)+"&key="+api_key)
     name = response.text
-    return render(request,"coffee_finder/index.html",{"name":name})
-
-def test(request):
     if request.method == "POST":
         location = request.POST.get("location")
         user = request.user
@@ -30,8 +30,21 @@ def test(request):
             data = Profile(user=user,location=location)
             data.save()
     else:
-        return render(request,"coffee_finder/test.html")
-    return render(request,"coffee_finder/test.html",{"location":location})
+        return render(request,"coffee_finder/index.html",{"name":name})
+    return render(request,"coffee_finder/index.html",{"name":name,"location":location})
+
+# def test(request):
+#     if request.method == "POST":
+#         location = request.POST.get("location")
+#         user = request.user
+#         if Profile.objects.filter(user=user).exists():
+#             Profile.objects.update(user=user,location=location)
+#         else:
+#             data = Profile(user=user,location=location)
+#             data.save()
+#     else:
+#         return render(request,"coffee_finder/test.html")
+#     return render(request,"coffee_finder/test.html",{"location":location})
 
 def signup(request):
     if request.method == "POST":

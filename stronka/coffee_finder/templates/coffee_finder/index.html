@@ -10,8 +10,20 @@
   <body class="body">
     <div>
       <div class="menu">
-        <h1 class="header1">Coffee Finder</h1>
-        <h3 class="header2">Find yourself in coffee</h3>
+        <div class="headers">
+          <h1 class="header1">Coffee Finder</h1>
+          <h3 class="header2">Find yourself in coffee</h3>
+        </div>
+        <div class="input">
+          {% block content %}
+          <form method="POST">
+              {% csrf_token %}
+              <label for="location">Location:</label>
+              <input type="text" name="location">
+              <input type="submit">
+          </form>
+          {% endblock %}
+        </div>
       </div>
       <div class="content grow" id="content">
         <div class="photowrap">
