@@ -4,4 +4,7 @@ from django_mysql.models import JSONField
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     location = models.CharField(max_length=50,default="Warsaw")
-    favourite = JSONField()
+    
+class Favourite(models.Model):
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    my_favourite = JSONField()
