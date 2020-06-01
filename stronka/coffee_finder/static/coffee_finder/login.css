@@ -1,0 +1,29 @@
+*{
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+.login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #945D5E;
+  flex-flow: column;
+  padding: 1.5em;
+  border-radius: 25px;
+}
+.wrap{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.header{
+  /* background-color: #822A8D; */
+  width: 100%;
+  text-align: center;
+}
+
+.body{
+  background-color: #FBF4EF;
+}

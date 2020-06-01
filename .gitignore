@@ -1,0 +1,9 @@
+*.pyc
+stronka/coffee_finder/__pycache__/views.cpython-38.pyc
+stronka/coffee_finder/migrations/__pycache__/0001_initial.cpython-38.pyc
+stronka/coffee_finder/migrations/__pycache__/0002_auto_20200529_1613.cpython-38.pyc
+stronka/coffee_finder/migrations/__pycache__/0003_auto_20200529_1613.cpython-38.pyc
+stronka/coffee_finder/migrations/__pycache__/0004_remove_profile_location.cpython-38.pyc
+stronka/coffee_finder/migrations/__pycache__/__init__.cpython-38.pyc
+stronka/stronka/__pycache__/settings.cpython-38.pyc
+*.pyc

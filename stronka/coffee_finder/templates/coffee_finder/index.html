@@ -4,30 +4,44 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{% static "coffee_finder/master.css" %}">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <title>Find yourself in coffee</title>
   </head>
   <body class="body">
     <div>
       <div class="menu">
-        <h1 class="header1">Coffee Finder</h1>
-        <h3 class="header2">Find yourself in coffee</h3>
+        <div class="menu1">
+          <div class="headers">
+            <h1 class="header1">Coffee Finder</h1>
+            <h3 class="header2">Find yourself in coffee</h3>
+          </div>
+          <div class="input">
+            {% block content %}
+            <form method="POST">
+                {% csrf_token %}
+                <label for="location">Location:</label>
+                <input type="text" name="location">
+                <button type="submit" name="send">Send</button>
+            </form>
+            {% endblock %}
+          </div>
+        </div>
+        <div class="username">
+          <div>Username: {{ username }}</div>
+          <div>Location: {{ location }}</div>
+        </div>
       </div>
       <div class="content grow" id="content">
         <div class="photowrap">
-          <div class="left" id="left" onclick="mouseClickLeft()">
-
-          </div>
-          <div class="right" id="right" onclick="mouseClickRight()">
-
-          </div>
+          <div class="left" id="left" onclick="mouseClickLeft()"></div>
+          <div class="right" id="right" onclick="mouseClickRight()"></div>
           <div class="photo">
             <img class="image" src="{% static "coffee_finder/kahawa.jpg" %}" alt="">
           </div>
         </div>
 
         <div class="description">
-          <p>Placeholder</p>
+          <div>Name:<p>{{ name }}</p></div>
           <p>Placeholder</p>
           <p>Placeholder</p>
         </div>
