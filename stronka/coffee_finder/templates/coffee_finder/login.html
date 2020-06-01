@@ -1,5 +1,5 @@
 {% extends 'coffee_finder/signup.html' %}
-{% load static%}
+{% load static %}
 {% block content %}
 <head>
   <link rel="stylesheet" type="text/css" href="{% static "coffee_finder/login.css" %}">
@@ -9,7 +9,7 @@
 <body class="body">
   <div class="wrap">
     <div class="login">
-      <h2>LOGIN</h2>
+      <h2 class="header">LOGIN</h2>
         <form method="post">
             {% csrf_token %}
             <label for="username">Username:</label>

@@ -7,10 +7,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 10em;
   background-color: #945D5E;
   flex-flow: column;
-  padding: 1em;
+  padding: 1.5em;
   border-radius: 25px;
 }
 .wrap{
@@ -19,6 +18,12 @@
   justify-content: center;
   height: 100%;
 }
+.header{
+  /* background-color: #822A8D; */
+  width: 100%;
+  text-align: center;
+}
+
 .body{
   background-color: #FBF4EF;
 }
