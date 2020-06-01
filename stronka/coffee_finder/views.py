@@ -19,20 +19,23 @@ def index(request):
     profile = Profile.objects.get()
     favourite = Favourite(profile=profile,my_favourite=response)
     profile.save()
-    # 
+    #Complete sheit
     response = json.loads(response)
     candidates = response["candidates"]
     id = candidates[0]
     id = id["place_id"]
     response = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+str(id)+"&key="+api_key)
     name = response.text
+    username = request.user
+    location = Profile.objects.get()
+    location = location.location
     if request.method == "POST":
         location = request.POST.get("location")
         user = request.user
         Profile.objects.update(user=user,location=location)
     else:
-        return render(request,"coffee_finder/index.html",{"name":name})
-    return render(request,"coffee_finder/index.html",{"name":name,"location":location})
+        return render(request,"coffee_finder/index.html",{"name":name,"username":username,"location":location})
+    return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"location":location})
 
 def signup(request):
     if request.method == "POST":

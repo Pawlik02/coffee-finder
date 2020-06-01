@@ -14,6 +14,26 @@
   align-items: center;
   justify-content: center;
 }
+.menu1{
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  justify-content: flex-end;
+}
+
+.username{
+  display: flex;
+  right: 10%;
+  margin: 4em;
+  margin-top: 0em;
+  width: 25%;
+  margin-bottom: 0em;
+  font-size: 20px;
+  flex-direction: column;
+  /* background-color: blue; */
+  align-items: center;
+  justify-content: center;
+}
 
 .headers{
   display: flex;
@@ -53,11 +73,16 @@
   flex-grow: 2;
   max-width: 550px;
   width: 90%;
+  height: 90%;
+  max-height: 700px;
   margin:1em auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 1;
+  background-color: #822A8D;
+  overflow: hidden;
+  border-radius: 25px 25px 25px 25px;
 }
 
 .photo{
@@ -70,16 +95,19 @@
   align-content: center;
   justify-content: center;
 }
+
 .photowrap{
   height: 550px;
   width: 100%;
   overflow: hidden;
-  border-radius: 25px 25px 0px 0px;
+  /* border-radius: 25px 25px 0px 0px; */
   position: relative;
+  background-color: #822A8D;
 }
 
 .photo img{
   object-fit: cover;
+  border-radius: 0px 0px 25px 25px;
 }
 
 .description{
@@ -91,8 +119,9 @@
   height: 150px;
   padding: 1em;
   background-color: #822A8D;
-  border-radius: 0px 0px 25px 25px;
+  /* border-radius: 0px 0px 25px 25px; */
 }
+
 .left{
   display: inherit;
   top: 50%;
@@ -104,6 +133,7 @@
   left: 0;
   top: 0;
 }
+
 .right{
   display: inherit;
   top: 50%;
