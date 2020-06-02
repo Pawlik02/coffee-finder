@@ -6,4 +6,5 @@ urlpatterns = [
     path("",views.index,name="index"),
     path("signup/",views.signup,name="signup"),
     path("login/",views.login_handler,name="login"),
+    path("coffee_finder/favourite_request",views.js_favourite_handler,name="favourite_request")
 ]

@@ -7,7 +7,7 @@ document.querySelector('#right').addEventListener("onclick", mouseClickRight);
 function mouseOverLeft() {
   document.querySelector('.content').style.transform = "rotate(-10deg)";
 }
-function mouseOut(){
+function mouseOut() {
   document.querySelector('.content').style.transform = "rotate(0deg)";
   document.querySelector('.content').classList.remove("clickedR");
   document.querySelector('.content').classList.remove("clickedL");
@@ -17,14 +17,32 @@ function mouseOverRight() {
   document.querySelector('.content').style.transform = "rotate(10deg)";
 }
 
-// function mouseOutRight() {
-//   document.querySelector('.content').style.transform = "rotate(0deg)";
-// }
+// send a GET request to server
+function get_request(where) {
+  $.ajax({
+    url: "coffee_finder/favourite_request",
+    type: "get",
+    // specify swipe direcion
+    data: {
+      direction: where
+    },
+    // handle server response if stuff goes well
+    success: (data, status) => {
+      alert("Data: " + data + "\nStatus: " + status);
+    },
+    // idk what to do if we get to here
+    error: (xhr) => {
+      alert("cant have shit in ajax")
+    }
+  });
+}
 
 function mouseClickRight() {
   document.querySelector('.content').classList.add("clickedR");
+  get_request("right")
 }
 
-function mouseClickLeft(){
+function mouseClickLeft() {
   document.querySelector('.content').classList.add("clickedL");
+  get_request("left")
 }

@@ -13,7 +13,7 @@ api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 def index(request):
     if request.user.is_anonymous:
         return HttpResponseRedirect(reverse("coffee_finder:login"))
-    
+
     response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query=plac+ratajskiego&type=cafe&key="+api_key)
     response = json.loads(response.text)
     info = response["results"]
@@ -78,3 +78,19 @@ def login_handler(request):
         else:
             return HttpResponse("Wrong data")
     return render(request, "coffee_finder/login.html")
+
+# r/NotMyJob
+def js_favourite_handler(request):
+    if request.method == "GET":
+        # handle left swipe
+        if request.GET["direction"] == "left" :
+            print("GET request has got gotten")
+            return HttpResponse("Wybrałeś lewo")
+
+        #handle right swipe
+        elif request.GET["direction"] == "right" :
+            print("GET request has got gotten: right")
+            return HttpResponse("Wybrałeś prawo")
+        else :
+            print("GET request has got gotten: center")
+            return HttpResponse("Wybrałeś środek")
