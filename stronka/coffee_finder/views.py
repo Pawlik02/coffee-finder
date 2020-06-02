@@ -65,3 +65,12 @@ def login_handler(request):
         else:
             return HttpResponse("Wrong data")
     return render(request, "coffee_finder/login.html")
+def parssing():
+    response = requests.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+place_id+"&radius=50000&type=cafe&key="+api_key)
+    res = json.loads(response.text)
+    info = res["results"]
+    info = info[0]
+    formatted_address = info["formatted_address"]
+    name = info["name"]
+    photos = info["photo"]
+    v_id = info["id"]
