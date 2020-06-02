@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from .models import Profile, Favourite
+from .models import Profile, Place, Favourite, Rejected
 
 api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
@@ -14,27 +14,28 @@ def index(request):
     if request.user.is_anonymous:
         return HttpResponseRedirect(reverse("coffee_finder:login"))
     response = requests.post("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=kahawa&inputtype=textquery&key="+api_key)
-    response = response.text
-    # Do zapisywania ulubionych
     profile = Profile.objects.get()
-    favourite = Favourite(profile=profile,my_favourite=response)
-    profile.save()
-    #Complete sheit
-    response = json.loads(response)
-    candidates = response["candidates"]
-    id = candidates[0]
-    id = id["place_id"]
-    response = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+str(id)+"&key="+api_key)
-    name = response.text
+
+    # Takie ciekawe testy
+    # for i in range(3):
+        # place = Place(profile=profile,my_place=tab[i])
+        # place.save()
+    # testowane = Place.objects.all()[0]
+    # Favourite.objects.create(profile=profile,my_favourite=testowane.my_place)
+    # Place.objects.all()[0].delete()
+    # Complete sheit
+    # response1 = json.loads(response)
+    # candidates = response1["candidates"]
+    # id = candidates[0]
+    # id = id["place_id"]
+    # response = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+str(id)+"&key="+api_key)
+    # name = response.text
     username = request.user
-    location = Profile.objects.get()
-    location = location.location
+    location = profile.location
     if request.method == "POST":
         location = request.POST.get("location")
         user = request.user
         Profile.objects.update(user=user,location=location)
-    else:
-        return render(request,"coffee_finder/index.html",{"name":name,"username":username,"location":location})
     return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"location":location})
 
 def signup(request):
