@@ -13,19 +13,33 @@ api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 def index(request):
     if request.user.is_anonymous:
         return HttpResponseRedirect(reverse("coffee_finder:login"))
-    response = requests.post("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=kahawa&inputtype=textquery&key="+api_key)
-    response = response.text
+    response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query=plac+ratajskiego&type=cafe&key="+api_key)
+    response = json.loads(response.text)
+    info = response["results"]
+    info = info[0]
+    formatted_address = info["formatted_address"]
+    name = info["name"]
+    if "photos" in info:
+        photo = info["photos"]
+        photo = photo[0]
+        photo = photo["photo_reference"]
+        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
+    else:
+        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
+    v_id = info["id"]
+    isopen = info["opening_hours"]
+    isopen = isopen["open_now"]
     # Do zapisywania ulubionych
     profile = Profile.objects.get()
     favourite = Favourite(profile=profile,my_favourite=response)
     profile.save()
     #Complete sheit
-    response = json.loads(response)
-    candidates = response["candidates"]
-    id = candidates[0]
-    id = id["place_id"]
-    response = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+str(id)+"&key="+api_key)
-    name = response.text
+    # response = json.loads(response)
+    # candidates = response["candidates"]
+    # id = candidates[0]
+    # id = id["place_id"]
+    # response = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+str(id)+"&key="+api_key)
+    # name = response.text
     username = request.user
     location = Profile.objects.get()
     location = location.location
@@ -33,9 +47,9 @@ def index(request):
         location = request.POST.get("location")
         user = request.user
         Profile.objects.update(user=user,location=location)
-    else:
-        return render(request,"coffee_finder/index.html",{"name":name,"username":username,"location":location})
-    return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"location":location})
+    # else:
+    #     return render(request,"coffee_finder/index.html",{"name":name,"username":username,"location":location,"formatted_address":formatted_address,"photo":photo,"id":v_id})
+    return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":isopen})
 
 def signup(request):
     if request.method == "POST":
