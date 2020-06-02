@@ -31,14 +31,6 @@ def index(request):
     isopen = info["opening_hours"]
     isopen = isopen["open_now"]
 
-    # Takie ciekawe testy ulubionych
-    # for i in range(3):
-        # place = Place(profile=profile,my_place=tab[i])
-        # place.save()
-    # testowane = Place.objects.all()[0]
-    # Favourite.objects.create(profile=profile,my_favourite=testowane.my_place)
-    # Place.objects.all()[0].delete()
-
     # INFO BAR
     username = request.user
     profile = Profile.objects.get()
@@ -79,18 +71,21 @@ def login_handler(request):
             return HttpResponse("Wrong data")
     return render(request, "coffee_finder/login.html")
 
-# r/NotMyJob
 def js_favourite_handler(request):
+    profile = Profile.objects.get()
     if request.method == "GET":
-        # handle left swipe
-        if request.GET["direction"] == "left" :
-            print("GET request has got gotten")
-            return HttpResponse("Wybrałeś lewo")
-
-        #handle right swipe
-        elif request.GET["direction"] == "right" :
-            print("GET request has got gotten: right")
+        # handle right swipe
+        if request.GET["direction"] == "right" :
+            testowane = Place.objects.all()[0]
+            Favourite.objects.create(profile=profile,my_favourite=testowane.my_place)
+            testowane.delete()
             return HttpResponse("Wybrałeś prawo")
+        # handle left swipe
+        elif request.GET["direction"] == "left" :
+            testowane = Place.objects.all()[0]
+            Rejected.objects.create(profile=profile,my_rejected=testowane.my_place)
+            testowane.delete()
+            return HttpResponse("Wybrałeś lewo")
+        # handle middle
         else :
-            print("GET request has got gotten: center")
             return HttpResponse("Wybrałeś środek")
