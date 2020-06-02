@@ -36,14 +36,15 @@
           <div class="left" id="left" onclick="mouseClickLeft()"></div>
           <div class="right" id="right" onclick="mouseClickRight()"></div>
           <div class="photo">
-            <img class="image" src="{% static "coffee_finder/kahawa.jpg" %}" alt="">
+            <img class="image" src="{{ photo }}" alt="{% static "/coffee_finder/kahawa.jpg" %}">
+            <!-- <div class="image">{{ photo }}</div> -->
           </div>
         </div>
 
         <div class="description">
-          <div>Name:<p>{{ name }}</p></div>
-          <p>Placeholder</p>
-          <p>Placeholder</p>
+          <div>Name: {{ name }}</div>
+          <div>Address: {{ formatted_address }}</div>
+          <div>Is serving coffee now: {{ isopen }}</div>
         </div>
       </div>
     </div>
