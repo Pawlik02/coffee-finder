@@ -10,6 +10,24 @@ from .models import Profile, Places, Favourites, Rejected
 
 api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
+def ParsedCafeData(info) :
+    formatted_address = info["formatted_address"]
+    name = info["name"]
+    isopen = info["opening_hours"]
+    isopen = isopen["open_now"]
+    
+    if "photos" in info:
+        photo = info["photos"]
+        photo = photo[0]
+        photo = photo["photo_reference"]
+        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
+    else:
+        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
+    v_id = info["id"]
+    return {"name":name,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":isopen}
+
+
+
 def index(request):
     if request.user.is_anonymous:
         return HttpResponseRedirect(reverse("coffee_finder:login"))
@@ -27,27 +45,15 @@ def index(request):
         for i in range(len(info)):
             Places.objects.create(profile=profile,my_places=info[i])
 
-    info = Places.objects.all()[0].my_places
-    formatted_address = info["formatted_address"]
-    name = info["name"]
-    isopen = info["opening_hours"]
-    isopen = isopen["open_now"]
-
-    if "photos" in info:
-        photo = info["photos"]
-        photo = photo[0]
-        photo = photo["photo_reference"]
-        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
-    else:
-        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
-    v_id = info["id"]
+    data = ParsedCafeData(Places.objects.all()[0].my_places)
     
     if request.method == "POST":
         location = request.POST.get("location")
         user = request.user
         Profile.objects.update(user=user,location=location)
         Places.objects.all().delete()
-    return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":isopen})
+        
+    return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"id":data["id"],"isopen":data["isopen"]})
 
 def favourites(request):
     username = request.user
@@ -93,7 +99,8 @@ def js_favourites_handler(request):
             right = Places.objects.all()[0]
             Favourites.objects.create(profile=profile,my_favourites=right.my_places)
             right.delete()
-            return HttpResponse("Wybrałeś prawo")
+            data = json.dumps(ParsedCafeData(Places.objects.all()[0].my_places))
+            return HttpResponse(data)
         # handle left swipe
         elif request.GET["direction"] == "left" :
             left = Places.objects.all()[0]
