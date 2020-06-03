@@ -20,7 +20,7 @@ function mouseOverRight() {
 // send a GET request to server
 function get_request(where) {
   $.ajax({
-    url: "favourite_handler",
+    url: "favourites_handler",
     type: "get",
     // specify swipe direcion
     data: {

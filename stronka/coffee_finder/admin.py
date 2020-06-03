@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Profile, Place, Favourite, Rejected
+from .models import Profile, Places, Favourites, Rejected
 
-class PlaceInLine(admin.TabularInline):
-    model = Place
+class PlacesInLine(admin.TabularInline):
+    model = Places
     extra = 0
 
-class FavouriteInLine(admin.TabularInline):
-    model = Favourite
+class FavouritesInLine(admin.TabularInline):
+    model = Favourites
     extra = 0
 
 class RejectedInLine(admin.TabularInline):
@@ -14,6 +14,6 @@ class RejectedInLine(admin.TabularInline):
     extra = 0
 
 class ProfileAdmin(admin.ModelAdmin):
-    inlines = [PlaceInLine,FavouriteInLine,RejectedInLine]
+    inlines = [PlacesInLine,FavouritesInLine,RejectedInLine]
 
 admin.site.register(Profile, ProfileAdmin)

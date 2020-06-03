@@ -3,15 +3,15 @@ from django.contrib.auth.models import User
 from django_mysql.models import JSONField
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    location = models.CharField(max_length=50,default="Warsaw")
+    location = models.CharField(max_length=100,default="Warsaw")
     
-class Place(models.Model):
+class Places(models.Model):
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
-    my_place = JSONField()
+    my_places = JSONField()
 
-class Favourite(models.Model):
+class Favourites(models.Model):
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
-    my_favourite = JSONField()
+    my_favourites = JSONField()
 
 class Rejected(models.Model):
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
