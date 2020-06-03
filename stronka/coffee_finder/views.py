@@ -41,10 +41,12 @@ def index(request):
     isopen = info["opening_hours"]
     isopen = isopen["open_now"]
     return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":isopen})
+
 def favourites(request):
+    username = request.user
     counter = []
     counter = range(10)
-    return render(request,"coffee_finder/favourites.html",{"counter":counter})
+    return render(request,"coffee_finder/favourites.html",{"counter":counter,"username":username})
 
 
 def signup(request):
