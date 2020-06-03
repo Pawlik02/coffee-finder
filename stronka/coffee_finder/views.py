@@ -23,31 +23,51 @@ def index(request):
     if len(Places.objects.all())==0:
         response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+location+"&type=cafe&key="+api_key)
         response = json.loads(response.text)
-        info = response["results"]
-        for i in range(len(info)):
-            Places.objects.create(profile=profile,my_places=info[i])
+        if response["status"] == "OK":
+            info = response["results"]
+            for i in range(len(info)):
+                Places.objects.create(profile=profile,my_places=info[i])
+        else:
+            return render(request,"coffee_finder/index.html",{"name":"NO INFORMATION","location":location,"username":username,"formatted_address":"NO INFORMATION"})
 
     info = Places.objects.all()[0].my_places
     formatted_address = info["formatted_address"]
     name = info["name"]
-    isopen = info["opening_hours"]
-    isopen = isopen["open_now"]
+    if 'opening_hours' in info:
+        isopen = info["opening_hours"]
+        isopen = isopen["open_now"]
 
-    if "photos" in info:
-        photo = info["photos"]
-        photo = photo[0]
-        photo = photo["photo_reference"]
-        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
+        if "photos" in info:
+            photo = info["photos"]
+            photo = photo[0]
+            photo = photo["photo_reference"]
+            photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
+        else:
+            photo = "https/://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
+        v_id = info["id"]
+
+        if request.method == "POST":
+            location = request.POST.get("location")
+            user = request.user
+            Profile.objects.update(user=user,location=location)
+            Places.objects.all().delete()
+        return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":isopen})
     else:
-        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
-    v_id = info["id"]
-    
-    if request.method == "POST":
-        location = request.POST.get("location")
-        user = request.user
-        Profile.objects.update(user=user,location=location)
-        Places.objects.all().delete()
-    return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":isopen})
+        if "photos" in info:
+            photo = info["photos"]
+            photo = photo[0]
+            photo = photo["photo_reference"]
+            photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
+        else:
+            photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
+        v_id = info["id"]
+
+        if request.method == "POST":
+            location = request.POST.get("location")
+            user = request.user
+            Profile.objects.update(user=user,location=location)
+            Places.objects.all().delete()
+        return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":"NO INFORMATION"})        
 
 def favourites(request):
     username = request.user
