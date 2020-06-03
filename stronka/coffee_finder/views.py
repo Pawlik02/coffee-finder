@@ -83,15 +83,15 @@ def js_favourites_handler(request):
     if request.method == "GET":
         # handle right swipe
         if request.GET["direction"] == "right" :
-            testowane = Places.objects.all()[0]
-            Favourites.objects.create(profile=profile,my_favourites=testowane.my_places)
-            testowane.delete()
+            right = Places.objects.all()[0]
+            Favourites.objects.create(profile=profile,my_favourites=right.my_places)
+            right.delete()
             return HttpResponse("Wybrałeś prawo")
         # handle left swipe
         elif request.GET["direction"] == "left" :
-            testowane = Places.objects.all()[0]
-            Rejected.objects.create(profile=profile,my_rejected=testowane.my_places)
-            testowane.delete()
+            left = Places.objects.all()[0]
+            Rejected.objects.create(profile=profile,my_rejected=left.my_places)
+            left.delete()
             return HttpResponse("Wybrałeś lewo")
         # handle middle
         else :
