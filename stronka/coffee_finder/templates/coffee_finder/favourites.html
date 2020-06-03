@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static "coffee_finder/favourites.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Coffee Finder Favourites Page</title>
+  </head>
+  <body class="body">
+      <div class="menu">
+        <h1>Favourites</h1>
+        <div class="menu1">
+          <div class="username">
+            Username: dupa
+          </div>
+        </div>
+      </div>
+    <div class="body1">
+      <div class="container">
+        {% for i in counter %}
+        <div class="content">
+
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
