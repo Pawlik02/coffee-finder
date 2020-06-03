@@ -36,19 +36,34 @@
   justify-content: center;
 }
 .content{
-  transition: all .3s cubic-bezier(0.18, 0.89, 0.54, 1.35);
   display: flex;
+  flex-direction: column;
+  transition: all .3s cubic-bezier(0.18, 0.89, 0.54, 1.35);
   width: 220px;
   height: 280px;
   background-color: blue;
   margin: 1em;
   min-width: 220px;
   border-radius: 25px 25px 25px 25px;
-
+  overflow: hidden;
 }
+
 .content:hover{
   transform: scale(2);
 }
+
+.photowrap{
+  display: flex;
+  height: 200px;
+}
+
+.description{
+  display: flex;
+  width: 100%;
+  height: 80px;
+  background-color: orange;
+}
+
 .container{
   display: flex;
   flex-direction: row;
