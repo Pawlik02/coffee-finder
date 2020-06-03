@@ -41,7 +41,7 @@ def index(request):
     else:
         photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
     v_id = info["id"]
-    
+
     if request.method == "POST":
         location = request.POST.get("location")
         user = request.user
@@ -51,9 +51,11 @@ def index(request):
 
 def favourites(request):
     username = request.user
+    favourites = Favourites.objects.all()
     counter = []
-    counter = range(10)
-    return render(request,"coffee_finder/favourites.html",{"counter":counter,"username":username})
+    counter = range(len(favourites))
+
+    return render(request,"coffee_finder/favourites.html",{"counter":counter,"username":username,"favourites":favourites})
 
 
 def signup(request):
