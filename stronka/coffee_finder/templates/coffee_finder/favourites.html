@@ -18,13 +18,13 @@
       </div>
     <div class="body1">
       <div class="container">
-        {% for favourites in favourites %}
+        {% for favourite in favourites %}
         <div class="content">
           <div class="photowrap">
-            {{ favourite }}
+            {{ favourite|get_item: }}
           </div>
           <div class="description">
-
+            {{ favourite.name }}
           </div>
         </div>
         {% endfor %}

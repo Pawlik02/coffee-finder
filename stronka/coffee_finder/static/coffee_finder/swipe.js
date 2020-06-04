@@ -28,14 +28,13 @@ function get_request(where) {
     },
     // handle server response if stuff goes well
     success: (data, status) => {
-      alert("Data: " + data + "\nStatus: " + status);
+      // alert("Data: " + data + "\nStatus: " + status);
       parsed_data = JSON.parse(data);
       console.log(parsed_data);
       console.log(`name: ${parsed_data.name}`);
       document.querySelector("#name").innerHTML = parsed_data.name;
       document.querySelector("#formatted_address").innerHTML = parsed_data.formatted_address;
-      document.querySelector("#photo").innerHTML = parsed_data.photo;
-      document.querySelector("#v_id").innerHTML = parsed_data.v_id;
+      document.querySelector(".image").src = parsed_data.photo;
       document.querySelector("#isopen").innerHTML = parsed_data.isopen;
     },
     // idk what to do if we get to here
@@ -47,10 +46,14 @@ function get_request(where) {
 
 function mouseClickRight() {
   document.querySelector('.content').classList.add("clickedR");
+  document.querySelector('.content').style.opacity = "0";
   get_request("right")
+  setTimeout(()=>{document.querySelector('.content').style.opacity = "1";},500)
 }
 
 function mouseClickLeft() {
   document.querySelector('.content').classList.add("clickedL");
+  document.querySelector('.content').style.opacity = "0";
   get_request("left")
+  setTimeout(()=>{document.querySelector('.content').style.opacity = "1";},500)
 }

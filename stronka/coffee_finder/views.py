@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.template.defaulttags import register
 from .models import Profile, Places, Favourites, Rejected
 
 api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
@@ -56,13 +57,15 @@ def index(request):
 
     return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"id":data["id"],"isopen":data["isopen"]})
 
+@register.filter
+def get_item(dict,key):
+    return dictionary.get(key)
+
 def favourites(request):
     username = request.user
     favourites = Favourites.objects.all()
-    counter = []
-    counter = range(len(favourites))
-
-    return render(request,"coffee_finder/favourites.html",{"counter":counter,"username":username,"favourites":favourites})
+    # name =
+    return render(request,"coffee_finder/favourites.html",{"username":username,"favourites":favourites})
 
 def signup(request):
     if request.method == "POST":
