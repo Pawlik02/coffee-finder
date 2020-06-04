@@ -31,7 +31,7 @@ function get_request(where) {
       // alert("Data: " + data + "\nStatus: " + status);
       parsed_data = JSON.parse(data);
       console.log(parsed_data);
-      console.log(`name: ${parsed_data.name}`);
+      // console.log(`name: ${parsed_data.name}`);
       document.querySelector("#name").innerHTML = parsed_data.name;
       document.querySelector("#formatted_address").innerHTML = parsed_data.formatted_address;
       document.querySelector(".image").src = parsed_data.photo;
