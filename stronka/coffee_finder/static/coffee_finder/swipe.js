@@ -47,13 +47,14 @@ function get_request(where) {
 function mouseClickRight() {
   document.querySelector('.content').classList.add("clickedR");
   document.querySelector('.content').style.opacity = "0";
-  get_request("right")
   setTimeout(()=>{document.querySelector('.content').style.opacity = "1";},500)
+  get_request("right");
 }
 
 function mouseClickLeft() {
   document.querySelector('.content').classList.add("clickedL");
   document.querySelector('.content').style.opacity = "0";
-  get_request("left")
   setTimeout(()=>{document.querySelector('.content').style.opacity = "1";},500)
+  get_request("left");
+
 }
