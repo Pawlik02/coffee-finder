@@ -30,6 +30,7 @@
         <div class="username">
           <div>Username: {{ username }}</div>
           <div>Location: {{ location }}</div>
+          <div onclick="location.href='{% url "coffee_finder:favourites" %}';" class="button" style="cursor: pointer;">Favourites</div>
         </div>
       </div>
       <div class="content grow" id="content">
@@ -37,7 +38,7 @@
           <div class="left" id="left" onclick="mouseClickLeft()"></div>
           <div class="right" id="right" onclick="mouseClickRight()"></div>
           <div class="photo">
-            <img class="image" src="{{ photo }}" alt="{% static "/coffee_finder/kahawa.jpg" %}">
+            <img class="image" src="{{ photo }}" alt="{% static "coffee_finder/kahawa.jpg" %}">
             <!-- <div class="image">{{ photo }}</div> -->
           </div>
         </div>

@@ -12,8 +12,13 @@
         <div class="menu1">
           <h1>Favourites</h1>
         </div>
-        <div class="username">
-          Username: {{ username }}
+        <div class="menu2">
+          <div class="username">
+            Username: {{ username }}
+          </div>
+          <div onclick="location.href='{% url "coffee_finder:index" %}';" class="button" style="cursor: pointer;">
+            Main Page
+          </div>
         </div>
       </div>
     <div class="body1">
@@ -21,7 +26,7 @@
         {% for favourite in favourites %}
         <div class="content">
           <div class="photowrap">
-            {{ favourite|get_item: }}
+            <img class="photo" src="{{ favourite.photo }}" alt="coffee_finder/kahawa.jpg">
           </div>
           <div class="description">
             {{ favourite.name }}

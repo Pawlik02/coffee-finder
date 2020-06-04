@@ -59,12 +59,18 @@ def index(request):
 
 @register.filter
 def get_item(dict,key):
-    return dictionary.get(key)
+    return dict.get(key)
 
 def favourites(request):
+    if request.user.is_anonymous:
+        return HttpResponseRedirect(reverse("coffee_finder:login"))
+    profile = Profile.objects.filter(user=request.user).get()
     username = request.user
-    favourites = Favourites.objects.all()
-    # name =
+    favourites = []
+    
+    for object in profile.favourites_set.all():
+        favourites.append(ParsedCafeData(object.my_favourites))
+
     return render(request,"coffee_finder/favourites.html",{"username":username,"favourites":favourites})
 
 def signup(request):
