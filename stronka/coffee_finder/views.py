@@ -10,17 +10,33 @@ from .models import Profile, Places, Favourites, Rejected
 
 api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 
+def ParsedCafeData(info):
+    formatted_address = info["formatted_address"]
+    name = info["name"]
+    isopen = info["opening_hours"]
+    isopen = isopen["open_now"]
+    
+    if "photos" in info:
+        photo = info["photos"]
+        photo = photo[0]
+        photo = photo["photo_reference"]
+        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
+    else:
+        photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
+    v_id = info["id"]
+    return {"name":name,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":isopen}
+
 def index(request):
     if request.user.is_anonymous:
         return HttpResponseRedirect(reverse("coffee_finder:login"))
 
     # INFO BAR
     username = request.user
-    profile = Profile.objects.get()
+    profile = Profile.objects.filter(user=request.user).get()
     location = profile.location
 
     # Jak nie ma propozycji to ładuje nowe
-    if len(Places.objects.all())==0:
+    if len(profile.places_set.all())==0:
         response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+location+"&type=cafe&key="+api_key)
         response = json.loads(response.text)
         if response["status"] == "OK":
@@ -30,51 +46,21 @@ def index(request):
         else:
             return render(request,"coffee_finder/index.html",{"name":"NO INFORMATION","location":location,"username":username,"formatted_address":"NO INFORMATION"})
 
-    info = Places.objects.all()[0].my_places
-    formatted_address = info["formatted_address"]
-    name = info["name"]
-    if 'opening_hours' in info:
-        isopen = info["opening_hours"]
-        isopen = isopen["open_now"]
-
-        if "photos" in info:
-            photo = info["photos"]
-            photo = photo[0]
-            photo = photo["photo_reference"]
-            photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
-        else:
-            photo = "https/://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
-        v_id = info["id"]
-
-        if request.method == "POST":
-            location = request.POST.get("location")
-            user = request.user
-            Profile.objects.update(user=user,location=location)
-            Places.objects.all().delete()
-        return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":isopen})
-    else:
-        if "photos" in info:
-            photo = info["photos"]
-            photo = photo[0]
-            photo = photo["photo_reference"]
-            photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
-        else:
-            photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
-        v_id = info["id"]
-
-        if request.method == "POST":
-            location = request.POST.get("location")
-            user = request.user
-            Profile.objects.update(user=user,location=location)
-            Places.objects.all().delete()
-        return render(request,"coffee_finder/index.html",{"name":name,"location":location,"username":username,"formatted_address":formatted_address,"photo":photo,"id":v_id,"isopen":"NO INFORMATION"})        
+    data = ParsedCafeData(profile.places_set.all()[0].my_places)
+    
+    if request.method == "POST":
+        location = request.POST.get("location")
+        user = request.user
+        Profile.objects.update(user=user,location=location)
+        Places.objects.all().delete()
+        
+    return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"id":data["id"],"isopen":data["isopen"]})
 
 def favourites(request):
     username = request.user
     counter = []
     counter = range(10)
     return render(request,"coffee_finder/favourites.html",{"counter":counter,"username":username})
-
 
 def signup(request):
     if request.method == "POST":
@@ -106,20 +92,22 @@ def login_handler(request):
     return render(request, "coffee_finder/login.html")
 
 def js_favourites_handler(request):
-    profile = Profile.objects.get()
+    profile = Profile.objects.filter(user=request.user).get()
     if request.method == "GET":
         # handle right swipe
         if request.GET["direction"] == "right" :
-            right = Places.objects.all()[0]
+            right = profile.places_set.all()[0]
             Favourites.objects.create(profile=profile,my_favourites=right.my_places)
             right.delete()
-            return HttpResponse("Wybrałeś prawo")
+            data = json.dumps(ParsedCafeData(profile.places_set.all()[0].my_places))
+            return HttpResponse(data)
         # handle left swipe
         elif request.GET["direction"] == "left" :
-            left = Places.objects.all()[0]
+            left = profile.places_set.all()[0]
             Rejected.objects.create(profile=profile,my_rejected=left.my_places)
             left.delete()
-            return HttpResponse("Wybrałeś lewo")
+            data = json.dumps(ParsedCafeData(profile.places_set.all()[0].my_places))
+            return HttpResponse(data)
         # handle middle
         else :
             return HttpResponse("Wybrałeś środek")

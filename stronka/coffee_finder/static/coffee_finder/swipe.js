@@ -29,6 +29,14 @@ function get_request(where) {
     // handle server response if stuff goes well
     success: (data, status) => {
       alert("Data: " + data + "\nStatus: " + status);
+      parsed_data = JSON.parse(data);
+      console.log(parsed_data);
+      console.log(`name: ${parsed_data.name}`);
+      document.querySelector("#name").innerHTML = parsed_data.name;
+      document.querySelector("#formatted_address").innerHTML = parsed_data.formatted_address;
+      document.querySelector("#photo").innerHTML = parsed_data.photo;
+      document.querySelector("#v_id").innerHTML = parsed_data.v_id;
+      document.querySelector("#isopen").innerHTML = parsed_data.isopen;
     },
     // idk what to do if we get to here
     error: (xhr) => {
