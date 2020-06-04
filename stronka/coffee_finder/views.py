@@ -14,11 +14,12 @@ api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 def ParsedCafeData(info):
     formatted_address = info["formatted_address"]
     name = info["name"]
+    if "opening_hours" in info:  
+        isopen = info["opening_hours"]
+        isopen = isopen["open_now"]
+    else:
+        isopen = "No data"
     
-    isopen = info["opening_hours"]
-    isopen = isopen["open_now"]
-    
-
     if "photos" in info:
         photo = info["photos"]
         photo = photo[0]
@@ -63,9 +64,7 @@ def index(request):
                 Places.objects.create(profile=profile,my_places=info[i])
         else:
             return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
-
-    # return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"isopen":data["isopen"]})
-    return render(request,"coffee_finder/index.html",{"location":location,"username":username})
+    return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"isopen":data["isopen"]})
 
 @register.filter
 def get_item(dict,key):
