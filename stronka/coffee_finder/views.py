@@ -14,12 +14,12 @@ api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 def ParsedCafeData(info):
     formatted_address = info["formatted_address"]
     name = info["name"]
-    if "opening_hours" in info:  
+    if "opening_hours" in info:
         isopen = info["opening_hours"]
         isopen = isopen["open_now"]
     else:
         isopen = "No data"
-    
+
     if "photos" in info:
         photo = info["photos"]
         photo = photo[0]
@@ -76,11 +76,17 @@ def favourites(request):
     profile = Profile.objects.filter(user=request.user).get()
     username = request.user
     favourites = []
-    
+
     for object in profile.favourites_set.all():
         favourites.append(ParsedCafeData(object.my_favourites))
 
     return render(request,"coffee_finder/favourites.html",{"username":username,"favourites":favourites})
+
+def place(request, place="dupa"):
+    if request.user.is_anonymous:
+        return HttpResponseRedirect(reverse("coffee_finder:login"))
+    return HttpResponse("dupa")
+
 
 def signup(request):
     if request.method == "POST":
