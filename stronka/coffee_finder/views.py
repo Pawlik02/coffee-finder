@@ -82,11 +82,10 @@ def favourites(request):
 
     return render(request,"coffee_finder/favourites.html",{"username":username,"favourites":favourites})
 
-def place(request, place="dupa"):
+def place(request, place):
     if request.user.is_anonymous:
         return HttpResponseRedirect(reverse("coffee_finder:login"))
     return HttpResponse("dupa")
-
 
 def signup(request):
     if request.method == "POST":

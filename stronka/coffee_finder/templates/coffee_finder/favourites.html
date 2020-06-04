@@ -24,7 +24,7 @@
     <div class="body1">
       <div class="container">
         {% for favourite in favourites %}
-        <div onclick="location.href='{% url "coffee_finder:place" %}';" class="content">
+        <div onclick="location.href='{% url "coffee_finder:place" favourite.name %}';" class="content">
           <div class="photowrap">
             <img class="photo" src="{{ favourite.photo }}" alt="coffee_finder/kahawa.jpg">
           </div>
