@@ -1,5 +1,6 @@
 import requests
 import json
+import time
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
@@ -37,18 +38,33 @@ def index(request):
     username = request.user
     profile = Profile.objects.filter(user=request.user).get()
     location = profile.location
-
     # Jak nie ma propozycji to ładuje nowe
-    if len(profile.places_set.all())==0:
-        response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+location+"&type=cafe&key="+api_key)
+    response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+location+"&type=cafe&key="+api_key)
+    response = json.loads(response.text)
+    if response["status"] == "OK":
+        info = response["results"]
+        for i in range(len(info)):
+            Places.objects.create(profile=profile,my_places=info[i])
+    else:
+        return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
+    print(len(profile.places_set.all()))
+    while "next_page_token" in response:
+        time.sleep(1.51)
+        next_page_token = response["next_page_token"]
+        response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+location+"&type=cafe&pagetoken="+next_page_token+"&key="+api_key)
+        print(response)
         response = json.loads(response.text)
+        print(response)
         if response["status"] == "OK":
             info = response["results"]
             for i in range(len(info)):
                 Places.objects.create(profile=profile,my_places=info[i])
         else:
             return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
-
+        
+    print(len(profile.places_set.all()))
+        
+    
     data = ParsedCafeData(profile.places_set.all()[0].my_places)
 
     if request.method == "POST":
@@ -64,6 +80,16 @@ def index(request):
                 Places.objects.create(profile=profile,my_places=info[i])
         else:
             return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
+        while "next_page_token" in response:
+            time.sleep(1.51)
+            response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+location+"&type=cafe&key="+api_key+"&pagetoken="+next_page_token)
+            response = json.loads(response.text)
+            if response["status"] == "OK":
+                info = response["results"]
+                for i in range(len(info)):
+                    Places.objects.create(profile=profile,my_places=info[i])
+            else:
+                return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
     return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"isopen":data["isopen"]})
 
 @register.filter
