@@ -38,7 +38,6 @@ def index(request):
     username = request.user
     profile = Profile.objects.filter(user=request.user).get()
     location = profile.location
-    r_list=[]
     # Jak nie ma propozycji to ładuje nowe
     response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+location+"&type=cafe&key="+api_key)
     response = json.loads(response.text)
