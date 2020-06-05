@@ -14,8 +14,8 @@
       </div>
       <div class="menu2">
         <div class="username">
-          <div>Username: {{ username }}</div>
-          <div>Location: {{ location }}</div>
+          <div><span id="b">Username: {{ username }}</div>
+          <div><span id="b">Location: {{ location }}</div>
         </div>
         <div onclick="location.href='{% url "coffee_finder:favourites" %}';" class="button" style="cursor: pointer;">
           Favourites
@@ -29,13 +29,13 @@
         </div>
       </div>
       <div class="description">
-        <div>Name: <span id="name">{{ object.name }}</span></div>
-        <div>Address: <span id="formatted_address">{{ object.formatted_address }}</span></div>
-        <div>Rating: <span>{{ object.rating }}</span></div>
-        <div>Schedule: {% for hour in schedule %}<div>{{ hour }}</div>{% endfor %}</div>
-        <div>Review: <span>{{ review.text }}</span></div>
-        <div>Review's author: <span>{{ review.author_name }}</span>
-        <div>Is serving coffee now:  <span id="isopen">{{ isopen }}</span></div>
+        <div><span id="b">Name: </span><span id="name">{{ object.name }}</span></div>
+        <div><span id="b">Address: </span><span id="formatted_address">{{ object.formatted_address }}</span></div>
+        <div><span id="b">Rating: </span><span>{{ object.rating }}</span></div>
+        <div><span id="b">Schedule: </span>{% for hour in schedule %}<div>{{ hour }}</div>{% endfor %}</div>
+        <div><span id="b">Review: </span><span>{{ review.text }}</span></div>
+        <div><span id="b">Review's author: </span><span>{{ review.author_name }}</span>
+        <div><span id="b">Is serving coffee now:  </span><span id="isopen">{{ isopen }}</span></div>
         <div class="map">
         <iframe width="600" height="400" frameborder="0" style="border:0"
         src={{ map }} allowfullscreen></iframe>

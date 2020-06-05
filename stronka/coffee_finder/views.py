@@ -63,14 +63,8 @@ def index(request):
         else:
             return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
 
-<<<<<<< HEAD
-    print(len(profile.places_set.all()))
-
-
-=======
         stuff = threading.Thread(target=NextPage, name="\n", args=[response,location,profile,username,request])
         stuff.start()
->>>>>>> master
     data = ParsedCafeData(profile.places_set.all()[0].my_places)
 
     if request.method == "POST":
@@ -88,7 +82,7 @@ def index(request):
             return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
         stuff = threading.Thread(target=NextPage, name="\n", args=[response,location,profile,username,request])
         stuff.start()
-       
+
     return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"isopen":data["isopen"]})
 
 @register.filter
