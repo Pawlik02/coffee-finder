@@ -19,7 +19,9 @@
   display: flex;
   flex-direction: row;
   width: 70%;
-  justify-content: flex-end;
+  padding-left: 50px;
+  justify-content: flex-start;
+  font-size: 30px;
 }
 .menu2{
   display: flex;
@@ -51,7 +53,16 @@
     flex-direction: row;
 }
 
+.description{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin:20px;
+  margin-left: 0px;
+}
+
 .photowrap {
+    display: flex;
     height: 700px;
     width: 50%;
     position: relative;
@@ -62,6 +73,7 @@
 }
 
 .photo {
+    display: flex;
     background-color: pink;
     display: flex;
     flex-grow: inherit;

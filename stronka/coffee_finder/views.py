@@ -93,7 +93,7 @@ def place(request, place):
     for object in profile.favourites_set.all():
         if object.my_favourites["name"] == name:
             if "photos" in object.my_favourites:
-                photo = info["photos"]
+                photo = object.my_favourites["photos"]
                 photo = photo[0]
                 photo = photo["photo_reference"]
                 photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
@@ -101,14 +101,15 @@ def place(request, place):
                 photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
             details = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+object.my_favourites["place_id"]+"&key="+api_key)
             details = json.loads(details.text)
+            details = details["result"]
             rating = object.my_favourites["rating"]
             schedual = details["opening_hours"]
             isopen = schedual["open_now"]
-            schedual = details["weekdat_text"]
+            schedual = schedual["weekday_text"]
             review = details["reviews"]
             review = review[0]
 
-            return render(request, "coffee_finder/place.html",{"name":object.my_favourites["name"],"details":details,"username":username,"location":location,"isopen":isopen})
+            return render(request, "coffee_finder/place.html",{"object":object.my_favourites,"details":details,"username":username,"location":location,"isopen":isopen,"photo":photo,"review":review,"schedual":schedual})
     return HttpResponse("dupa")
 
 def signup(request):
