@@ -92,7 +92,23 @@ def place(request, place):
     name = place
     for object in profile.favourites_set.all():
         if object.my_favourites["name"] == name:
-            return render(request, "coffee_finder/place.html",{"name":object.my_favourites["name"],"username":username,"location":location})
+            if "photos" in object.my_favourites:
+                photo = info["photos"]
+                photo = photo[0]
+                photo = photo["photo_reference"]
+                photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
+            else:
+                photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
+            details = requests.post("https://maps.googleapis.com/maps/api/place/details/json?place_id="+object.my_favourites["place_id"]+"&key="+api_key)
+            details = json.loads(details.text)
+            rating = object.my_favourites["rating"]
+            schedual = details["opening_hours"]
+            isopen = schedual["open_now"]
+            schedual = details["weekdat_text"]
+            review = details["reviews"]
+            review = review[0]
+
+            return render(request, "coffee_finder/place.html",{"name":object.my_favourites["name"],"details":details,"username":username,"location":location,"isopen":isopen})
     return HttpResponse("dupa")
 
 def signup(request):
@@ -130,7 +146,7 @@ def js_favourites_handler(request):
         # handle right swipe
         if request.GET["direction"] == "right" :
             right = profile.places_set.all()[0]
-        
+
             if len(profile.favourites_set.all())>0:
                 for i in range (len(profile.favourites_set.all())):
                     if (ParsedCafeData(profile.places_set.all()[0].my_places))["name"] == (ParsedCafeData(profile.favourites_set.all()[i].my_favourites))["name"]:

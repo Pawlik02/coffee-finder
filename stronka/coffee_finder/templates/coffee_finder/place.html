@@ -22,6 +22,21 @@
         </div>
       </div>
     </div>
-    {{ name }}
+    <div class="content">
+      <div class="photowrap">
+        <div class="photo">
+          <img class="image" src="{{ photo }}" alt="{% static "coffee_finder/kahawa.jpg" %}">
+        </div>
+      </div>
+      <div class="description">
+        <div>Name: <span id="name"></span></div>
+        <div>Address: <span id="formatted_address">{{ object.formatted_address }}</span></div>
+        <div>Rating: <span>{{ object.rating }}</span></div>
+        <div>Schedual: {for hour in schedual}<div>{{ hour }}</div>{% endfor %}</div>
+        <div>Review: <span>{{ review.text }}</span></div>
+        <div>Review's author: <span>{{ review.author }}</span>
+        <div>Is serving coffee now:  <span id="isopen">{{ isopen }}</span></div>
+      </div>
+    </div>
   </body>
 </html>
