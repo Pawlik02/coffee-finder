@@ -61,10 +61,10 @@ def index(request):
                 Places.objects.create(profile=profile,my_places=info[i])
         else:
             return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
-        
+
     print(len(profile.places_set.all()))
-        
-    
+
+
     data = ParsedCafeData(profile.places_set.all()[0].my_places)
 
     if request.method == "POST":
