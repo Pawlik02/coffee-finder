@@ -1,10 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <link rel="stylesheet" type="text/css" href="{% static "coffee_finder/place.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>{{ name }}</title>
   </head>
   <body>
-
+    <div class="menu">
+      <div class="menu1">
+        <h1>{{ name }}</h1>
+      </div>
+      <div class="menu2">
+        <div class="username">
+          <div>Username: {{ username }}</div>
+          <div>Location: {{ location }}</div>
+        </div>
+        <div onclick="location.href='{% url "coffee_finder:favourites" %}';" class="button" style="cursor: pointer;">
+          Favourites
+        </div>
+      </div>
+    </div>
+    {{ name }}
   </body>
 </html>

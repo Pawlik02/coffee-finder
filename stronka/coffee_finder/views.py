@@ -75,16 +75,24 @@ def favourites(request):
         return HttpResponseRedirect(reverse("coffee_finder:login"))
     profile = Profile.objects.filter(user=request.user).get()
     username = request.user
+    location = profile.location
     favourites = []
 
     for object in profile.favourites_set.all():
         favourites.append(ParsedCafeData(object.my_favourites))
 
-    return render(request,"coffee_finder/favourites.html",{"username":username,"favourites":favourites})
+    return render(request,"coffee_finder/favourites.html",{"username":username,"location":location,"favourites":favourites})
 
 def place(request, place):
     if request.user.is_anonymous:
         return HttpResponseRedirect(reverse("coffee_finder:login"))
+    profile = Profile.objects.filter(user=request.user).get()
+    username = request.user
+    location = profile.location
+    name = place
+    for object in profile.favourites_set.all():
+        if object.my_favourites["name"] == name:
+            return render(request, "coffee_finder/place.html",{"name":object.my_favourites["name"],"username":username,"location":location})
     return HttpResponse("dupa")
 
 def signup(request):
