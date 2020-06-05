@@ -36,6 +36,10 @@
         <div>Review: <span>{{ review.text }}</span></div>
         <div>Review's author: <span>{{ review.author_name }}</span>
         <div>Is serving coffee now:  <span id="isopen">{{ isopen }}</span></div>
+        <div class="map">
+        <iframe width="600" height="400" frameborder="0" style="border:0"
+        src={{ map }} allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </body>
