@@ -117,6 +117,14 @@ def js_favourites_handler(request):
         # handle right swipe
         if request.GET["direction"] == "right" :
             right = profile.places_set.all()[0]
+        
+            if len(profile.favourites_set.all())>0:
+                for i in range (len(profile.favourites_set.all())):
+                    if (ParsedCafeData(profile.places_set.all()[0].my_places))["name"] == (ParsedCafeData(profile.favourites_set.all()[i].my_favourites))["name"]:
+                        right.delete()
+                        data = json.dumps(ParsedCafeData(profile.places_set.all()[0].my_places))
+                        return HttpResponse(data)
+
             Favourites.objects.create(profile=profile,my_favourites=right.my_places)
             right.delete()
             data = json.dumps(ParsedCafeData(profile.places_set.all()[0].my_places))
