@@ -133,7 +133,6 @@ def place(request, place):
             review = review[0]
             map = "https://www.google.com/maps/embed/v1/place?q=place_id:"+object.my_favourites["place_id"]+"&key="+api_key
             return render(request, "coffee_finder/place.html",{"object":object.my_favourites,"details":details,"username":username,"location":location,"isopen":isopen,"photo":photo,"review":review,"schedule":schedule,"map":map})
-    return HttpResponse("dupa")
 
 def signup(request):
     if request.method == "POST":
