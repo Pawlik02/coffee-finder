@@ -112,7 +112,6 @@
   height: 100%;
   background-color: #FBF4EF;
 }
-
-.bold {
-  font-weight: 700;
+#b{
+  font-weight: bold;
 }
