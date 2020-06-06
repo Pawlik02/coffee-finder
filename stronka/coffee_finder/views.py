@@ -16,7 +16,7 @@ api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 def ParsedCafeData(info):
     formatted_address = info["formatted_address"]
     name = info["name"]
-    if "opening_hours" in info:
+    if "opening_hours" in info and "open_now" in info["opening_hours"]:
         isopen = info["opening_hours"]
         isopen = isopen["open_now"]
     else:
