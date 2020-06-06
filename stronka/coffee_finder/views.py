@@ -86,7 +86,7 @@ def index(request):
             Profile.objects.filter(user=user).update(user=user,location=previous_location)
             location = previous_location
             return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
-        
+
     return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"isopen":data["isopen"]})
 
 @register.filter
@@ -166,6 +166,9 @@ def login_handler(request):
         else:
             return HttpResponse("Wrong data")
     return render(request, "coffee_finder/login.html")
+
+def js_favourites_delete(request):
+    pass
 
 def js_favourites_handler(request):
     profile = Profile.objects.filter(user=request.user).get()

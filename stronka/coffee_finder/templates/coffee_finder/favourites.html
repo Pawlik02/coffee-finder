@@ -25,17 +25,23 @@
     <div class="body1">
       <div class="container">
         {% for favourite in favourites %}
-        <div onclick="location.href='{% url "coffee_finder:place" favourite.name %}';" class="content">
-          <div class="photowrap">
-            <img class="photo" src="{{ favourite.photo }}" alt="coffee_finder/kahawa.jpg">
-          </div>
-          <div class="description">
-            <div><strong>Name: </strong>{{ favourite.name }}</div>
-            <div><strong>Adress: </strong>{{ favourite.formatted_address }}</div>
+        <div class="content1">
+          <!-- <div id="{{ favourite.name }}"><img class="icon" src="{% static "coffee_finder/x-square.svg" %}" alt=""></div> -->
+          <div onclick="location.href='{% url "coffee_finder:place" favourite.name %}';" class="content">
+            <div class="photowrap">
+              <img class="photo" src="{{ favourite.photo }}" alt="coffee_finder/kahawa.jpg">
+
+            </div>
+            <div class="description">
+              <div><strong>Name: </strong id="name">{{ favourite.name }}</div>
+              <div><strong>Adress: </strong>{{ favourite.formatted_address }}</div>
+            </div>
           </div>
         </div>
         {% endfor %}
       </div>
     </div>
+    <!-- <script src="{% static "coffee_finder/favourites.js" %}">
+    </script> -->
   </body>
 </html>

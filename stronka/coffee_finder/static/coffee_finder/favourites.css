@@ -61,18 +61,35 @@
   box-shadow: 0px 2px 8px;
   overflow: hidden;
 }
+.content1{
+  position: relative;
+}
+
+.content1:hover{
+  z-index: 1000;
+}
 
 .content:hover{
   transform: scale(2);
   box-shadow: 0px 10px 16px;
+  z-index: 999;
 }
 
 .photowrap{
+  position: relative;
   justify-content: center;
   display: flex;
   height: 200px;
 }
+
+.icon{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
 .photo{
+  position: relative;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -84,6 +101,7 @@
   padding: 10px;
   width: 100%;
   height: 110px;
+  position: relative;
   background-color: #822A8D;
 }
 
