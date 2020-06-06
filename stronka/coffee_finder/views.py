@@ -133,10 +133,14 @@ def place(request, place):
             else:
                 schedule = ["No data"]
                 isopen = "No data"
-            review = details["reviews"]
-            review = review[0]
-            map = "https://www.google.com/maps/embed/v1/place?q=place_id:"+object.my_favourites["place_id"]+"&key="+api_key
-            return render(request, "coffee_finder/place.html",{"object":object.my_favourites,"details":details,"username":username,"location":location,"isopen":isopen,"photo":photo,"review":review,"schedule":schedule,"map":map})
+            if "reviews" in details:
+                review = details["reviews"]
+                review = review[0]
+                map = "https://www.google.com/maps/embed/v1/place?q=place_id:"+object.my_favourites["place_id"]+"&key="+api_key
+                return render(request, "coffee_finder/place.html",{"object":object.my_favourites,"details":details,"username":username,"location":location,"isopen":isopen,"photo":photo,"review":review,"schedule":schedule,"map":map})
+            else:
+                map = "https://www.google.com/maps/embed/v1/place?q=place_id:"+object.my_favourites["place_id"]+"&key="+api_key
+                return render(request, "coffee_finder/place.html",{"object":object.my_favourites,"details":details,"username":username,"location":location,"isopen":isopen,"photo":photo,"review":"","schedule":schedule,"map":map})
 
 def signup(request):
     if request.method == "POST":
