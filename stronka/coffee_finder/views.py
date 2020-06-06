@@ -68,20 +68,24 @@ def index(request):
     data = ParsedCafeData(profile.places_set.all()[0].my_places)
 
     if request.method == "POST":
+        previous_location = location
         location = request.POST.get("location")
         user = request.user
         Profile.objects.filter(user=user).update(user=user,location=location)
-        profile.places_set.filter(profile=profile).delete()
+
         response = requests.post("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+location+"&type=cafe&key="+api_key)
         response = json.loads(response.text)
         if response["status"] == "OK":
+            profile.places_set.filter(profile=profile).delete()
             info = response["results"]
             for i in range(len(info)):
                 Places.objects.create(profile=profile,my_places=info[i])
+            stuff = threading.Thread(target=NextPage, name="\n", args=[response,location,profile,username,request])
+            stuff.start()
         else:
+            Profile.objects.filter(user=user).update(user=user,location=previous_location)
+            location = previous_location
             return render(request,"coffee_finder/index.html",{"name":"NO DATA","location":location,"username":username,"formatted_address":"NO DATA","photo":"NO PHOTO","isopen":"NO DATA"})
-        stuff = threading.Thread(target=NextPage, name="\n", args=[response,location,profile,username,request])
-        stuff.start()
        
     return render(request,"coffee_finder/index.html",{"name":data["name"],"location":location,"username":username,"formatted_address":data["formatted_address"],"photo":data["photo"],"isopen":data["isopen"]})
 
