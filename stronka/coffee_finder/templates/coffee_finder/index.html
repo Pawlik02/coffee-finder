@@ -20,7 +20,7 @@
             {% block content %}
             <form method="POST">
                 {% csrf_token %}
-                <label for="location">Location:</label>
+                <label for="location"><strong>Location:</strong></label>
                 <input type="text" name="location">
                 <button type="submit" name="send">Send</button>
             </form>
@@ -28,8 +28,8 @@
           </div>
         </div>
         <div class="username">
-          <div><span id="b">Username: </span>{{ username }}</div>
-          <div><span id="b">Location: </span>{{ location }}</div>
+          <div><strong>Username: </strong>{{ username }}</div>
+          <div><strong>Location: </strong>{{ location }}</div>
           <div onclick="location.href='{% url "coffee_finder:favourites" %}';" class="button" style="cursor: pointer;">Favourites</div>
         </div>
       </div>
@@ -48,9 +48,9 @@
             </div>
           </div>
           <div class="description">
-            <div><span id="b">Name: </span><span id="name">{{ name }}</span></div>
-            <div><span id="b">Address: </span><span id="formatted_address">{{ formatted_address }}</span></div>
-            <div><span id="b">Is serving coffee now: </span><span id="isopen">{{ isopen }}</span></div>
+            <div><strong>Name: </strong><span id="name">{{ name }}</span></div>
+            <div><strong>Address: </strong><span id="formatted_address">{{ formatted_address }}</span></div>
+            <div><strong>Is serving coffee now: </strong><span id="isopen">{{ isopen }}</span></div>
           </div>
         </div>
         <div class="bean">

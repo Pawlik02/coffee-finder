@@ -186,9 +186,11 @@
 }
 #grind{
   transition: all .3s cubic-bezier(0.18, 0.89, 0.54, 1.35);
+  opacity: 0;
 }
 .grind{
   transform: translate(0,250px) scale(2);
+  /* opacity: 1; */
 }
 .bean{
   display: flex;
@@ -204,9 +206,11 @@
 }
 #save{
   transition: all .3s cubic-bezier(0.18, 0.89, 0.54, 1.35);
+  opacity: 0;
 }
 .save{
   transform: translate(0,-250px) scale(2);
+  /* opacity: 1; */
 }
 
 .footer{
