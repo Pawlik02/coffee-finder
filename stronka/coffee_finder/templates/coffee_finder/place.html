@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static "coffee_finder/place.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>{{ object.name }}</title>
+  </head>
+  <body>
+    <div class="menu">
+      <div class="menu1">
+        <h1>{{ object.name }}</h1>
+      </div>
+      <div class="menu2">
+        <div class="username">
+          <div>Username: {{ username }}</div>
+          <div>Location: {{ location }}</div>
+        </div>
+        <div onclick="location.href='{% url "coffee_finder:favourites" %}';" class="button" style="cursor: pointer;">
+          Favourites
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="photowrap">
+        <div class="photo">
+          <img class="image" src="{{ photo }}" alt="{% static "coffee_finder/kahawa.jpg" %}">
+        </div>
+      </div>
+      <div class="description">
+        <div>Name: <span id="name">{{ object.name }}</span></div>
+        <div>Address: <span id="formatted_address">{{ object.formatted_address }}</span></div>
+        <div>Rating: <span>{{ object.rating }}</span></div>
+        <div>Schedule: {% for hour in schedule %}<div>{{ hour }}</div>{% endfor %}</div>
+        <div>Review: <span>{{ review.text }}</span></div>
+        <div>Review's author: <span>{{ review.author_name }}</span>
+        <div>Is serving coffee now:  <span id="isopen">{{ isopen }}</span></div>
+        <div class="map">
+        <iframe width="600" height="400" frameborder="0" style="border:0"
+        src={{ map }} allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
