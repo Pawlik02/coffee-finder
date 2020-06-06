@@ -28,8 +28,8 @@
           </div>
         </div>
         <div class="username">
-          <div>Username: {{ username }}</div>
-          <div>Location: {{ location }}</div>
+          <div><span class="bold">Username:</span> {{ username }}</div>
+          <div><span class="bold">Location:</span> {{ location }}</div>
           <div onclick="location.href='{% url "coffee_finder:favourites" %}';" class="button" style="cursor: pointer;">Favourites</div>
         </div>
       </div>
@@ -44,9 +44,9 @@
         </div>
 
         <div class="description">
-          <div>Name: <span id="name">{{ name }}</span></div>
-          <div>Address:  <span id="formatted_address">{{ formatted_address }}</span></div>
-          <div>Is serving coffee now:  <span id="isopen">{{ isopen }}</span></div>
+          <div><span class="bold">Name:</span> <span id="name">{{ name }}</span></div>
+          <div><span class="bold">Address:</span> <span id="formatted_address">{{ formatted_address }}</span></div>
+          <div><span class="bold">Is serving coffee now:</span> <span id="isopen">{{ isopen }}</span></div>
         </div>
       </div>
     </div>

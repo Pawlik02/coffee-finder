@@ -23,6 +23,7 @@
   justify-content: flex-start;
   font-size: 30px;
 }
+
 .menu2{
   display: flex;
   right: 10%;
@@ -43,9 +44,11 @@
   justify-content: center;
   align-items: center;
 }
+
 .button:hover{
   text-decoration: underline;
 }
+
 .content{
   display: flex;
   flex-direction: column;
@@ -93,6 +96,7 @@
   width: 95%;
   padding: 1em;
 }
+
 .body1{
   height: 100%;
   display: flex;
@@ -102,8 +106,13 @@
   width: 100%;
   background-color: #FBF4EF;
 }
+
 .body{
   overflow-y:scroll;
   height: 100%;
   background-color: #FBF4EF;
+}
+
+.bold {
+  font-weight: 700;
 }
