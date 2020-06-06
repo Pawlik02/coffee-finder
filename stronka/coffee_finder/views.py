@@ -16,7 +16,7 @@ api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 def ParsedCafeData(info):
     formatted_address = info["formatted_address"]
     name = info["name"]
-    if "opening_hours" in info:
+    if "opening_hours" in info and "open_now" in info["opening_hours"]:
         isopen = info["opening_hours"]
         isopen = isopen["open_now"]
     else:
@@ -133,7 +133,6 @@ def place(request, place):
             review = review[0]
             map = "https://www.google.com/maps/embed/v1/place?q=place_id:"+object.my_favourites["place_id"]+"&key="+api_key
             return render(request, "coffee_finder/place.html",{"object":object.my_favourites,"details":details,"username":username,"location":location,"isopen":isopen,"photo":photo,"review":review,"schedule":schedule,"map":map})
-    return HttpResponse("dupa")
 
 def signup(request):
     if request.method == "POST":
