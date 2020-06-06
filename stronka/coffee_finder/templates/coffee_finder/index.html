@@ -9,7 +9,7 @@
     <title>Find yourself in coffee</title>
   </head>
   <body class="body">
-    <div>
+    <div class="body1">
       <div class="menu">
         <div class="menu1">
           <div class="headers">
@@ -33,23 +33,33 @@
           <div onclick="location.href='{% url "coffee_finder:favourites" %}';" class="button" style="cursor: pointer;">Favourites</div>
         </div>
       </div>
-      <div class="content grow" id="content">
-        <div class="photowrap">
-          <div class="left" id="left" onclick="mouseClickLeft()"></div>
-          <div class="right" id="right" onclick="mouseClickRight()"></div>
-          <div class="photo">
-            <img class="image" src="{{ photo }}" alt="{% static "coffee_finder/kahawa.jpg" %}">
-            <!-- <div class="image">{{ photo }}</div> -->
+      <div class="body2">
+        <div class="grinder">
+          <span id="grind">GRIND IT!</span>
+          <img id="grinder" src="{% static "coffee_finder/mill.svg" %}" alt="">
+        </div>
+        <div class="content grow" id="content">
+          <div class="photowrap">
+            <div class="left" id="left" onclick="mouseClickLeft()"></div>
+            <div class="right" id="right" onclick="mouseClickRight()"></div>
+            <div class="photo">
+              <img class="image" src="{{ photo }}" alt="{% static "coffee_finder/kahawa.jpg" %}">
+              <!-- <div class="image">{{ photo }}</div> -->
+            </div>
+          </div>
+          <div class="description">
+            <div><span id="b">Name: </span><span id="name">{{ name }}</span></div>
+            <div><span id="b">Address: </span><span id="formatted_address">{{ formatted_address }}</span></div>
+            <div><span id="b">Is serving coffee now: </span><span id="isopen">{{ isopen }}</span></div>
           </div>
         </div>
-
-        <div class="description">
-          <div><span id="b">Name: </span><span id="name">{{ name }}</span></div>
-          <div><span id="b">Address: </span><span id="formatted_address">{{ formatted_address }}</span></div>
-          <div><span id="b">Is serving coffee now: </span><span id="isopen">{{ isopen }}</span></div>
+        <div class="bean">
+          <img id="bean" src="{% static "coffee_finder/seed.svg" %}" alt="">
+          <span id="save">SAVE IT!</span>
         </div>
       </div>
     </div>
+    <div class="footer">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
     <script src="{% static "coffee_finder/swipe.js"%}"></script>
   </body>
 </html>

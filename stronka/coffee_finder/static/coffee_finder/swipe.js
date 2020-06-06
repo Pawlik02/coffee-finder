@@ -6,15 +6,20 @@ document.querySelector('#right').addEventListener("onclick", mouseClickRight);
 
 function mouseOverLeft() {
   document.querySelector('.content').style.transform = "rotate(-10deg)";
+  document.querySelector('#grind').classList.add("grind");
 }
+
 function mouseOut() {
   document.querySelector('.content').style.transform = "rotate(0deg)";
   document.querySelector('.content').classList.remove("clickedR");
   document.querySelector('.content').classList.remove("clickedL");
+  document.querySelector('#grind').classList.remove("grind");
+  document.querySelector('#save').classList.remove("save");
 }
 
 function mouseOverRight() {
   document.querySelector('.content').style.transform = "rotate(10deg)";
+  document.querySelector('#save').classList.add("save");
 }
 
 // send a GET request to server
