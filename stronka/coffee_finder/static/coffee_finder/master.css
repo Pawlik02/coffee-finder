@@ -185,6 +185,7 @@
   width: 200px;
 }
 #grind{
+  z-index: -1;
   transition: all .3s cubic-bezier(0.18, 0.89, 0.54, 1.35);
   opacity: 0;
 }
@@ -205,6 +206,7 @@
   width: 200px;
 }
 #save{
+  z-index: -1;
   transition: all .3s cubic-bezier(0.18, 0.89, 0.54, 1.35);
   opacity: 0;
 }
