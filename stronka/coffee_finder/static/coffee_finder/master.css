@@ -8,7 +8,7 @@
   background-color: #945D5E;
   /* background-color: blue; */
   display: flex;
-  height: 10em;
+  height: 12.5em;
   width: 100%;
   flex-direction: row;
   align-items: center;
@@ -50,7 +50,7 @@
 }
 .header1{
   display: flex;
-  margin-left: 20px;
+  margin-left: 0.5em;
   flex-grow: inherit;
   font-size: 3em;
   /* background-color: blue; */
@@ -58,7 +58,7 @@
 }
 .header2{
   display: flex;
-  margin-left: 50px;
+  margin-left: 2em;
   flex-grow: inherit;
   /* font-family: 'Caveat', cursive; */
   font-size: 1.7em;
@@ -172,6 +172,7 @@
 }
 .grinder{
   display: flex;
+  transition: all .3s cubic-bezier(0.18, 0.89, 0.54, 1.35);
   flex-direction: column;
   object-fit: cover;
   display: flex;
@@ -195,6 +196,7 @@
 }
 .bean{
   display: flex;
+  transition: all .3s cubic-bezier(0.18, 0.89, 0.54, 1.35);
   flex-direction: column;
   object-fit: cover;
   justify-content: center;
