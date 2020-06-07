@@ -21,7 +21,7 @@
   width: 70%;
   padding-left: 50px;
   justify-content: flex-start;
-  font-size: 30px;
+  font-size: 2em;
 }
 .menu2{
   display: flex;
@@ -30,7 +30,7 @@
   margin-top: 0em;
   width: 25%;
   margin-bottom: 0em;
-  font-size: 20px;
+  font-size: 1.5em;
   flex-direction: column;
   /* background-color: blue; */
   align-items: center;
@@ -56,6 +56,7 @@
 .description{
   display: flex;
   flex-direction: column;
+  font-size: 1em;
   width: 50%;
   margin:20px;
   margin-left: 0px;
@@ -86,9 +87,9 @@
 }
 
 .image {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .body{
