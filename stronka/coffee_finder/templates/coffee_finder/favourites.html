@@ -26,9 +26,10 @@
       </div>
     <div class="body1">
       <div class="container">
+        {% csrf_token %}
         {% for favourite in favourites %}
-        <div class="content1">
-          <div><img onclick="clicked(`{{ favourite.name }}`);" class="icon" src="{% static "coffee_finder/x-square.svg" %}" alt=""></div>
+        <div class="content1" id="{{ favourite.place_id }}">
+          <div id="{{ favourite.name }}"><img onclick="clicked(`{{ favourite.place_id }}`);" class="icon" src="{% static "coffee_finder/x-square.svg" %}" alt=""></div>
           <div onclick="location.href='{% url "coffee_finder:place" favourite.name %}';" class="content">
             <div class="photowrap">
               <img class="photo" src="{{ favourite.photo }}" alt="coffee_finder/kahawa.jpg">
