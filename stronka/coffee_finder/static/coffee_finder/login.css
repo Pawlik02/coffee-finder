@@ -3,6 +3,8 @@
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
 }
+
+
 .login{
   display: flex;
   align-items: center;
@@ -25,5 +27,6 @@
 }
 
 .body{
+  height: 100%;
   background-color: #FBF4EF;
 }

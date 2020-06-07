@@ -52,7 +52,6 @@ function get_request(where) {
     },
     // idk what to do if we get to here
     error: (xhr) => {
-      alert("cant have shit in ajax")
     }
   });
 }
