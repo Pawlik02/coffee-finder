@@ -2,7 +2,7 @@ console.log(document.querySelector('.icon'))
 document.querySelector('.icon').addEventListener("onclick", clicked);
 // document.querySelector('.icon').innerHTML = "dupa";
 
-function clicked(){
+function clicked(arg){
   console.log("string");
   $.ajax({
     url: "favourites_delete",

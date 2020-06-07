@@ -28,7 +28,7 @@
       <div class="container">
         {% for favourite in favourites %}
         <div class="content1">
-          <div id="{{ favourite.name }}"><img onclick="clicked();" class="icon" src="{% static "coffee_finder/x-square.svg" %}" alt=""></div>
+          <div id="{{ favourite.name }}"><img onclick="clicked({{favourite.place_id}});" class="icon" src="{% static "coffee_finder/x-square.svg" %}" alt=""></div>
           <div onclick="location.href='{% url "coffee_finder:place" favourite.name %}';" class="content">
             <div class="photowrap">
               <img class="photo" src="{{ favourite.photo }}" alt="coffee_finder/kahawa.jpg">
