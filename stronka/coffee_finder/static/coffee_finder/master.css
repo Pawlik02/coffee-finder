@@ -28,7 +28,7 @@
   margin-top: 0em;
   width: 25%;
   margin-bottom: 0em;
-  font-size: 20px;
+  font-size: 1.5em;
   flex-direction: column;
   /* background-color: blue; */
   align-items: center;
@@ -46,13 +46,13 @@
   display: inherit;
   align-items: center;
   justify-content: center;
-  font-size: 25px;
+  font-size: 1.5em;
 }
 .header1{
   display: flex;
   margin-left: 20px;
   flex-grow: inherit;
-  font-size: 50px;
+  font-size: 3em;
   /* background-color: blue; */
   text-align: left;
 }
@@ -61,7 +61,7 @@
   margin-left: 50px;
   flex-grow: inherit;
   /* font-family: 'Caveat', cursive; */
-  font-size: 30px;
+  font-size: 1.7em;
   text-align: left;
 }
 
@@ -125,7 +125,7 @@
   width: 100%;
   flex-grow: inherit;
   flex-direction: inherit;
-  font-size: 20px;
+  font-size: 1.2em;
   height: 150px;
   padding: 1em;
   background-color: #822A8D;
