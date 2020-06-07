@@ -1,6 +1,7 @@
 {% block content %}
 <form method="POST">
     {% csrf_token %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'coffee_finder/favicon.ico' %}"/>
     <label for="location">Location:</label>
     <input type="text" name="location">
     <input type="submit">

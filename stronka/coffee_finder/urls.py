@@ -1,7 +1,9 @@
 from django.urls import path
+from django.views.generic.base import RedirectView
 from . import views
 
 app_name = "coffee_finder"
+
 urlpatterns = [
     path("",views.index,name="index"),
     path("signup/",views.signup,name="signup"),
