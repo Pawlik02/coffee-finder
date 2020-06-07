@@ -16,6 +16,7 @@ api_key = "AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
 def ParsedCafeData(info):
     formatted_address = info["formatted_address"]
     name = info["name"]
+    place_id = info["place_id"]
     if "opening_hours" in info and "open_now" in info["opening_hours"]:
         isopen = info["opening_hours"]
         isopen = isopen["open_now"]
@@ -29,7 +30,7 @@ def ParsedCafeData(info):
         photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference="+photo+"&key="+api_key
     else:
         photo = "https://maps.googleapis.com/maps/api/place/photo?maxheight=800&photoreference=CmRaAAAAZOkFJe830BVBm2Glk2rOxwMSnEtkR5PO1z1_VSMmxiPbdQkWLFzVXX9enkSdqECGHVDM4Qxt4bQIrfEajTi6NNsQVtwzskFXGT_pgxi6kH9sF8yr7JPQfJxSCW7H0xWQEhAVC39nIeFLkTiTxSaLoMydGhT14LkzvSTbfg2F74__oiET-t8ltA&key=AIzaSyA10sWJ6IOVGEIyHuygj8tIBDKr8RjDyEU"
-    return {"name":name,"formatted_address":formatted_address,"photo":photo,"isopen":isopen}
+    return {"name":name,"formatted_address":formatted_address,"photo":photo,"isopen":isopen,"place_id":place_id}
 
 def NextPage(response,location,profile,username,request):
     while "next_page_token" in response:
@@ -172,7 +173,15 @@ def login_handler(request):
     return render(request, "coffee_finder/login.html")
 
 def js_favourites_delete(request):
-    pass
+    id = request.GET["id"]
+    profile = Profile.objects.filter(user=request.user).get()
+    if request.method == "GET" :
+        favourites = profile.favourites_set.all()
+        for favourite in favourites :
+            if favourite.my_favourites["place_id"] == id :
+                favourite.delete()
+        # Favourites.objects.delete(profile=profile, )
+        return HttpResponse("It works")
 
 def js_favourites_handler(request):
     profile = Profile.objects.filter(user=request.user).get()
