@@ -1,7 +1,8 @@
-document.querySelector('.icon').addEventListener("onclick", click);
-document.querySelector('.icon').innerHTML = "dupa";
+console.log(document.querySelector('.icon'))
+document.querySelector('.icon').addEventListener("onclick", clicked);
+// document.querySelector('.icon').innerHTML = "dupa";
 
-function click(){
+function clicked(){
   console.log("string");
   $.ajax({
     url: "favourites_delete",
@@ -12,7 +13,7 @@ function click(){
     },
     // handle server response if stuff goes well
     success: (data, status) => {
-      alert("Dupa");
+      alert("dupa");
     },
     // idk what to do if we get to here
     error: (xhr) => {
@@ -20,4 +21,7 @@ function click(){
     }
   });
 }
-console.log(document.querySelector('.icon'))
+
+function dupa(){
+  console.log("dupa")
+}
