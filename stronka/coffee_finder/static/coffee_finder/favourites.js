@@ -12,7 +12,7 @@ function clicked(arg){
     },
     // handle server response if stuff goes well
     success: (data, status) => {
-      console.log("dupa");
+      document.querySelector(`#${arg}`).remove();
     },
     // idk what to do if we get to here
     error: (xhr) => {
