@@ -3,8 +3,10 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <!-- <script src="{% static "coffee_finder/favourites.js" %}"></script> -->
     <link rel="stylesheet" type="text/css" href="{% static "coffee_finder/favourites.css" %}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Coffee Finder Favourites Page</title>
   </head>
   <body class="body">
@@ -26,7 +28,7 @@
       <div class="container">
         {% for favourite in favourites %}
         <div class="content1">
-          <!-- <div id="{{ favourite.name }}"><img class="icon" src="{% static "coffee_finder/x-square.svg" %}" alt=""></div> -->
+          <div id="{{ favourite.name }}"><img onclick="clicked({{favourite.place_id}});" class="icon" src="{% static "coffee_finder/x-square.svg" %}" alt=""></div>
           <div onclick="location.href='{% url "coffee_finder:place" favourite.name %}';" class="content">
             <div class="photowrap">
               <img class="photo" src="{{ favourite.photo }}" alt="coffee_finder/kahawa.jpg">
@@ -41,7 +43,6 @@
         {% endfor %}
       </div>
     </div>
-    <!-- <script src="{% static "coffee_finder/favourites.js" %}">
-    </script> -->
+    <script src="{% static "coffee_finder/favourites.js" %}"></script>
   </body>
 </html>
